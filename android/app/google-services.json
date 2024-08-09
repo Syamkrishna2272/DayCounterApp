@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "422953569880",
+    "project_id": "day-counter-663b3",
+    "storage_bucket": "day-counter-663b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422953569880:android:dabcad590604fe53cc042d",
+        "android_client_info": {
+          "package_name": "com.example.day_counter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGEssWa93mtM_7tngfkaTGaFXEjxUZsic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
