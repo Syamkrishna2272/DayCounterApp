@@ -1,3 +1,4 @@
+import 'package:day_counter/screen/goal_screen.dart';
 import 'package:flutter/material.dart';
 
 class IntroPage extends StatelessWidget {
@@ -19,36 +20,49 @@ class IntroPage extends StatelessWidget {
             ),
             SizedBox(height: MediaQuery.sizeOf(context).height / 12),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(MediaQuery.sizeOf(context).width / 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Make every day count",
                     style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w700,
+                        fontSize: MediaQuery.sizeOf(context).height / 30,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white),
                   ),
-                  const Text(
+                  Text(
                     "Tracking your progress towards your goals. Each day brings you closer to achieving your milestones.",
                     style: TextStyle(
-                        fontSize: 15,
+                        fontSize: MediaQuery.sizeOf(context).height / 55,
                         fontWeight: FontWeight.w400,
                         color: Colors.white),
                   ),
                   SizedBox(height: MediaQuery.sizeOf(context).height / 25),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF2C69DE),
-                        borderRadius: BorderRadius.circular(5)),
-                    height: MediaQuery.sizeOf(context).height / 17,
-                    width: MediaQuery.sizeOf(context).width,
-                    child: const Center(
-                        child: Text(
-                      "Get Start",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    )),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const GoalScreen()),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF2C69DE),
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.sizeOf(context).width / 35)),
+                      height: MediaQuery.sizeOf(context).height / 17,
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Center(
+                          child: Text(
+                        "Get Start",
+                        style: TextStyle(
+                            fontSize: MediaQuery.sizeOf(context).height / 45,
+                            color: Colors.white),
+                      )),
+                    ),
                   )
                 ],
               ),
