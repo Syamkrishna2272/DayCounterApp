@@ -44,7 +44,7 @@ class IntroPage extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const GoalScreen()),
+                            builder: (context) => const GoalCounterScreen()),
                         (Route<dynamic> route) => false,
                       );
                     },

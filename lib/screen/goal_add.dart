@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class GoalAdding extends StatelessWidget {
   const GoalAdding({
@@ -7,6 +10,8 @@ class GoalAdding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController tittlecontroller = TextEditingController();
+    TextEditingController daycontroller = TextEditingController();
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius:
@@ -53,11 +58,13 @@ class GoalAdding extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            const Text(
-              "journey to success today!",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
+            const Expanded(
+              child: Text(
+                "journey to success today!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
             SizedBox(height: MediaQuery.sizeOf(context).height / 25),
@@ -69,6 +76,7 @@ class GoalAdding extends StatelessWidget {
             SizedBox(
               height: MediaQuery.sizeOf(context).height / 15,
               child: TextField(
+                controller: tittlecontroller,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   hintText: "Enter title (Mandatory)",
@@ -99,6 +107,7 @@ class GoalAdding extends StatelessWidget {
                   height: MediaQuery.sizeOf(context).height / 15,
                   width: MediaQuery.sizeOf(context).width / 3,
                   child: TextField(
+                    controller: daycontroller,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: "Days (Mandatory)",
@@ -136,7 +145,12 @@ class GoalAdding extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                startcount(
+                    tittlecontroller: tittlecontroller,
+                    daycontroller: daycontroller,
+                    context: context);
+              },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
                     vertical: MediaQuery.sizeOf(context).height / 50),
@@ -155,5 +169,36 @@ class GoalAdding extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  startcount(
+      {required TextEditingController tittlecontroller,
+      required TextEditingController daycontroller,
+      context}) {
+    if (tittlecontroller.text.isEmpty || daycontroller.text.isEmpty) {
+      return ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFFF44336),
+          content: Text('Complete the Details'),
+        ),
+      );
+    } else {
+      final CollectionReference firedata =
+          FirebaseFirestore.instance.collection('goalcollection');
+      final Timestamp currentTime = Timestamp.now();
+      final data = {
+        'Tittle': tittlecontroller.text,
+        'Day': daycontroller.text,
+        'createdAt': currentTime
+      };
+      firedata.add(data);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Successfully complete"),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.green,
+      ));
+      Navigator.of(context).pop();
+    }
   }
 }
