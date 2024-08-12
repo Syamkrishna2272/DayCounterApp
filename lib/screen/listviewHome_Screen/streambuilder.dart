@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:day_counter/screen/goal_add_screen.dart';
-import 'package:day_counter/widget/Date_time_showing.dart';
+import 'package:day_counter/screen/addDialogscreen/goal_add_screen.dart';
+import 'package:day_counter/screen/listviewHome_Screen/popup2.dart';
+import 'package:day_counter/screen/listviewHome_Screen/Date_time_showing.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -117,12 +118,7 @@ class StreamWidget extends StatelessWidget {
                                   startDate: startdate,
                                   endDate: enddate,
                                 ),
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.more_vert,
-                                      color: Colors.white,
-                                    ))
+                                PopUp2(doc: doc),
                               ],
                             ),
                           ),
@@ -158,3 +154,5 @@ class StreamWidget extends StatelessWidget {
     );
   }
 }
+
+

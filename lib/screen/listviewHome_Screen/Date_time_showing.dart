@@ -108,8 +108,7 @@ class _DayTimeShowingState extends State<DayTimeShowing> {
                                     '$hours',
                                     style: TextStyle(
                                         fontSize:
-                                            MediaQuery.sizeOf(context).width /
-                                                15,
+                                            MediaQuery.sizeOf(context).width /15,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white),
                                   ),
@@ -124,7 +123,10 @@ class _DayTimeShowingState extends State<DayTimeShowing> {
                       ],
                     )
                   : Container(
-                      color: Colors.blue,
+                      color: const Color(0xFF2C69DE),
+                      child: const Center(
+                        child: Text("COMPLETED"),
+                      ),
                     ),
             ),
           ),

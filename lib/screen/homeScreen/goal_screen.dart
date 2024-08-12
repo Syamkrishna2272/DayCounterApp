@@ -1,5 +1,6 @@
 
-import 'package:day_counter/widget/streambuilder.dart';
+import 'package:day_counter/screen/homeScreen/popup.dart';
+import 'package:day_counter/screen/listviewHome_Screen/streambuilder.dart';
 import 'package:flutter/material.dart';
 
 class GoalCounterScreen extends StatelessWidget {
@@ -23,29 +24,15 @@ class GoalCounterScreen extends StatelessWidget {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
             ),
           ),
-          actions: [
-            PopupMenuButton<int>(
-              onSelected: (value) {
-                switch (value) {
-                  case 1:
-                }
-              },
-              itemBuilder: (context) => [
-                const PopupMenuItem<int>(
-                  value: 1,
-                  child: Text("Send Feedback"),
-                ),
-              ],
-              icon: const Icon(
-                Icons.more_vert,
-                color: Colors.white,
-              ),
-            ),
+          actions: const [
+            PopUp1(),
           ],
         ),
         body: const SafeArea(
             child: StreamWidget()));
   }
 }
+
+
 
 

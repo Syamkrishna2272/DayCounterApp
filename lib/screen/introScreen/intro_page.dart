@@ -1,4 +1,4 @@
-import 'package:day_counter/screen/goal_screen.dart';
+import 'package:day_counter/screen/homeScreen/goal_screen.dart';
 import 'package:flutter/material.dart';
 
 class IntroPage extends StatelessWidget {

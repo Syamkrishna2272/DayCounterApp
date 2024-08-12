@@ -1,5 +1,5 @@
 import 'package:day_counter/firebase_options.dart';
-import 'package:day_counter/screen/intro_page.dart';
+import 'package:day_counter/screen/introScreen/intro_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
