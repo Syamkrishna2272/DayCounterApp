@@ -186,11 +186,14 @@ class GoalAdding extends StatelessWidget {
     } else {
       final CollectionReference firedata =
           FirebaseFirestore.instance.collection('goalcollection');
-      final Timestamp currentTime = Timestamp.now();
+      int endDay = int.parse(daycontroller.text);
+      final DateTime startdate = DateTime.now();
+      final DateTime endDate = startdate.add(Duration(days: endDay));
       final data = {
         'Tittle': tittlecontroller.text,
-        'Day': daycontroller.text,
-        'createdAt': currentTime
+        'StartDate':startdate,
+        'EndDate':endDate
+
       };
       firedata.add(data);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

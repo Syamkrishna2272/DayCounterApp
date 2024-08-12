@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:day_counter/screen/day_counting_widget.dart';
 import 'package:day_counter/screen/goal_add.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -101,18 +104,25 @@ class GoalCounterScreen extends StatelessWidget {
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             var doc = snapshot.data!.docs[index];
-                            var createdAt = doc['createdAt'] as Timestamp;
+                            var createdAt = doc['StartDate'] as Timestamp;
                             var formattedDate = DateFormat('MMMM d, yyyy')
                                 .format(createdAt.toDate());
+                            dynamic startdate =
+                                (doc['StartDate'] as Timestamp).toDate();
+                            dynamic enddate =
+                                (doc['EndDate'] as Timestamp).toDate();
+
                             return Card(
                               child: Container(
                                 height: MediaQuery.sizeOf(context).height / 9,
                                 decoration: BoxDecoration(
-                                    color: Color(0xFF34343E),
+                                    color: const Color(0xFF34343E),
                                     borderRadius: BorderRadius.circular(
                                         MediaQuery.sizeOf(context).height /
                                             63)),
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     SizedBox(
                                       width:
@@ -140,7 +150,18 @@ class GoalCounterScreen extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                    )
+                                    ),
+                                    DayCounter(
+                                      data: doc,
+                                      startDate: startdate,
+                                      endDate: enddate,
+                                    ),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.more_vert,
+                                          color: Colors.white,
+                                        ))
                                   ],
                                 ),
                               ),
