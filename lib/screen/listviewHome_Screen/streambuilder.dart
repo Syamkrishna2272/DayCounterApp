@@ -76,7 +76,6 @@ class StreamWidget extends StatelessWidget {
                             (doc['StartDate'] as Timestamp).toDate();
                         dynamic enddate =
                             (doc['EndDate'] as Timestamp).toDate();
-
                         return Card(
                           child: Container(
                             height: MediaQuery.sizeOf(context).height / 9,
