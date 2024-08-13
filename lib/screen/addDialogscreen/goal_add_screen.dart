@@ -1,14 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_counter/function/date_time_adding.dart';
+import 'package:day_counter/function/date_time_editing.dart';
 import 'package:flutter/material.dart';
 
-class GoalAdding extends StatelessWidget {
-  const GoalAdding({super.key, this.isEditPage});
+class GoalAdding extends StatefulWidget {
+  const GoalAdding({super.key, this.isEditPage, this.goaldata});
   final bool? isEditPage;
+  final dynamic goaldata;
+  @override
+  State<GoalAdding> createState() => _GoalAddingState();
+}
+
+class _GoalAddingState extends State<GoalAdding> {
+  TextEditingController tittlecontroller = TextEditingController();
+  TextEditingController daycontroller = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.isEditPage == true) {
+      tittlecontroller.text = widget.goaldata['Tittle'].toString();
+
+      Timestamp start = widget.goaldata['StartDate'];
+      Timestamp end = widget.goaldata['EndDate'];
+      DateTime startDate = start.toDate();
+      DateTime endDate = end.toDate();
+      int dayDifference = endDate.difference(startDate).inDays;
+      daycontroller.text = '$dayDifference';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController tittlecontroller = TextEditingController();
-    TextEditingController daycontroller = TextEditingController();
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius:
@@ -146,10 +169,16 @@ class GoalAdding extends StatelessWidget {
             const SizedBox(height: 20),
             InkWell(
               onTap: () {
-                startcount(
-                    tittlecontroller: tittlecontroller,
-                    daycontroller: daycontroller,
-                    context: context);
+                (widget.isEditPage == true)
+                    ? editcount(
+                        tittlecontroller: tittlecontroller,
+                        daycontroller: daycontroller,
+                        context: context,
+                        doc: widget.goaldata)
+                    : startcount(
+                        tittlecontroller: tittlecontroller,
+                        daycontroller: daycontroller,
+                        context: context);
               },
               child: Ink(
                 height: MediaQuery.sizeOf(context).height / 17,
@@ -159,10 +188,10 @@ class GoalAdding extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       MediaQuery.sizeOf(context).width / 40),
                 ),
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Start Countdown",
-                    style: TextStyle(color: Colors.white),
+                    (widget.isEditPage == true) ? 'Edit' : 'Start CountDown',
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),

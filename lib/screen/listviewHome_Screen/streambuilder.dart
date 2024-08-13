@@ -83,7 +83,7 @@ class StreamWidget extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: const Color(0xFF34343E),
                                 borderRadius: BorderRadius.circular(
-                                    MediaQuery.sizeOf(context).height / 63)),
+                                    MediaQuery.sizeOf(context).height / 75)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -154,5 +154,3 @@ class StreamWidget extends StatelessWidget {
     );
   }
 }
-
-

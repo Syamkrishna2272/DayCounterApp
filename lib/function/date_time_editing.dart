@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-startcount(
+editcount(
     {required TextEditingController tittlecontroller,
     required TextEditingController daycontroller,
+    doc,
     context}) {
   if (tittlecontroller.text.isEmpty || daycontroller.text.isEmpty) {
     return ScaffoldMessenger.of(context).showSnackBar(
@@ -24,14 +25,12 @@ startcount(
       'StartDate': startdate,
       'EndDate': endDate
     };
-    firedata.add(data);
+    firedata.doc(doc.id).update(data);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Successfully complete"),
+      content: Text("Successfully Updated"),
       duration: Duration(seconds: 2),
       backgroundColor: Colors.green,
     ));
     Navigator.of(context).pop();
   }
 }
-
-

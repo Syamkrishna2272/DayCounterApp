@@ -16,7 +16,7 @@ class PopUp2 extends StatelessWidget {
       onSelected: (value) {
         if (value == 'Edit') {
           Navigator.of(context).push(MaterialPageRoute(builder: (context){
-            return const GoalAdding();
+            return GoalAdding(isEditPage: true,goaldata: doc,); 
           }));
         } else if (value == 'Delete') {
           FirebaseFirestore.instance
