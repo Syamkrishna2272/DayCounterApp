@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:day_counter/screen/addDialogscreen/goal_add_screen.dart';
 import 'package:flutter/material.dart';
 
 class PopUp2 extends StatelessWidget {
@@ -14,6 +15,9 @@ class PopUp2 extends StatelessWidget {
     return PopupMenuButton<String>(
       onSelected: (value) {
         if (value == 'Edit') {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context){
+            return const GoalAdding();
+          }));
         } else if (value == 'Delete') {
           FirebaseFirestore.instance
               .collection('goalcollection')
