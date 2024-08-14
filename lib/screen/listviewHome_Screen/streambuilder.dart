@@ -3,6 +3,7 @@ import 'package:day_counter/screen/addDialogscreen/goal_add_screen.dart';
 import 'package:day_counter/screen/listviewHome_Screen/popup2.dart';
 import 'package:day_counter/screen/listviewHome_Screen/Date_time_showing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class StreamWidget extends StatelessWidget {
@@ -30,25 +31,34 @@ class StreamWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FloatingActionButton(
-                  backgroundColor: const Color(0xFF2C69DE),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const GoalAdding();
-                      },
-                    );
-                  },
-                  shape: const CircleBorder(),
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height / 9,
+                  width: MediaQuery.sizeOf(context).width,
+                  child: FloatingActionButton(
+                    backgroundColor: const Color(0xFF2C69DE),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const GoalAdding();
+                        },
+                      );
+                    },
+                    shape: const CircleBorder(),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: MediaQuery.sizeOf(context).width / 8,
+                    ),
                   ),
                 ),
-                const Text(
+                SizedBox(height: MediaQuery.sizeOf(context).height / 42),
+                Text(
                   'list is empty!',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: MediaQuery.sizeOf(context).width / 22,
+                      fontWeight: FontWeight.w700),
                 ),
                 const Text(
                   'Tap on ‘+’ and create your first goal',
@@ -78,7 +88,7 @@ class StreamWidget extends StatelessWidget {
                             (doc['EndDate'] as Timestamp).toDate();
                         return Card(
                           child: Container(
-                            height: MediaQuery.sizeOf(context).height / 9,
+                            height: MediaQuery.sizeOf(context).height / 8,
                             decoration: BoxDecoration(
                                 color: const Color(0xFF34343E),
                                 borderRadius: BorderRadius.circular(
@@ -90,23 +100,19 @@ class StreamWidget extends StatelessWidget {
                                   width: MediaQuery.sizeOf(context).width / 2,
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:MainAxisAlignment.center,
+                                      crossAxisAlignment:CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        Text( 
                                           doc['Tittle'],
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize:
-                                                  MediaQuery.sizeOf(context)
-                                                          .width /
-                                                      20),
-                                        ),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize:MediaQuery.sizeOf(context).width /20),
+                                           ),
                                         Text('Mark on $formattedDate',
-                                            style: const TextStyle(
+                                            style:  TextStyle(
+                                              fontSize: MediaQuery.sizeOf(context).width/30,
                                                 color: Colors.white)),
                                       ],
                                     ),
@@ -128,7 +134,7 @@ class StreamWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(MediaQuery.sizeOf(context).width / 15),
                 child: FloatingActionButton(
                   backgroundColor: const Color(0xFF2C69DE),
                   onPressed: () {
@@ -136,6 +142,7 @@ class StreamWidget extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return const GoalAdding(); //goal adding
+                        
                       },
                     );
                   },

@@ -1,4 +1,3 @@
-
 import 'package:day_counter/screen/homeScreen/popup.dart';
 import 'package:day_counter/screen/listviewHome_Screen/streambuilder.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ class GoalCounterScreen extends StatelessWidget {
         backgroundColor: const Color(0xFF121212),
         appBar: AppBar(
           backgroundColor: const Color(0xFF121212),
-          leading: const Icon( 
+          leading: const Icon(
             Icons.account_box_rounded,
             color: Colors.white,
           ),
@@ -27,12 +26,8 @@ class GoalCounterScreen extends StatelessWidget {
           actions: const [
             PopUp1(),
           ],
+          
         ),
-        body: const SafeArea(
-            child: StreamWidget()));
+        body: const SafeArea(child: StreamWidget()));
   }
 }
-
-
-
-

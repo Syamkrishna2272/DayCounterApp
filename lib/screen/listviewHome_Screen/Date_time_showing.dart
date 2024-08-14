@@ -69,9 +69,10 @@ class _DayTimeShowingState extends State<DayTimeShowing> {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                    color: const Color(0xFFDBDBDB),
+                                    color: const Color.fromARGB(
+                                        255, 118, 117, 117),
                                     borderRadius: BorderRadius.circular(
-                                        MediaQuery.sizeOf(context).width / 38)),
+                                        MediaQuery.sizeOf(context).width / 60)),
                                 height: MediaQuery.sizeOf(context).width / 9,
                                 width: MediaQuery.sizeOf(context).width / 9,
                                 child: Center(
@@ -86,9 +87,11 @@ class _DayTimeShowingState extends State<DayTimeShowing> {
                                   ),
                                 ),
                               ),
-                              const Text("Days",
+                              Text("Days",
                                   style: TextStyle(
-                                      color: Color(0xFF2C69DE),
+                                      fontSize:
+                                          MediaQuery.sizeOf(context).width / 35,
+                                      color: const Color(0xFF2C69DE),
                                       fontWeight: FontWeight.w600)),
                             ],
                           ),
@@ -98,9 +101,10 @@ class _DayTimeShowingState extends State<DayTimeShowing> {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                    color: const Color(0xFFDBDBDB),
+                                    color: const Color.fromARGB(
+                                        255, 118, 117, 117),
                                     borderRadius: BorderRadius.circular(
-                                        MediaQuery.sizeOf(context).width / 38)),
+                                        MediaQuery.sizeOf(context).width / 60)),
                                 height: MediaQuery.sizeOf(context).width / 9,
                                 width: MediaQuery.sizeOf(context).width / 9,
                                 child: Center(
@@ -108,24 +112,34 @@ class _DayTimeShowingState extends State<DayTimeShowing> {
                                     '$hours',
                                     style: TextStyle(
                                         fontSize:
-                                            MediaQuery.sizeOf(context).width /15,
+                                            MediaQuery.sizeOf(context).width /
+                                                15,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white),
                                   ),
                                 ),
                               ),
-                              const Text("Hours",
+                              Text("Hours",
                                   style: TextStyle(
-                                      color: Color(0xFF2C69DE),
+                                      fontSize:
+                                          MediaQuery.sizeOf(context).width / 35,
+                                      color: const Color(0xFF2C69DE),
                                       fontWeight: FontWeight.w600)),
                             ],
                           ),
                       ],
                     )
                   : Container(
-                      color: const Color(0xFF2C69DE),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF2C69DE),
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.sizeOf(context).width / 25)),
                       child: const Center(
-                        child: Text("COMPLETED"),
+                        child: Text(
+                          "COMPLETED",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
             ),

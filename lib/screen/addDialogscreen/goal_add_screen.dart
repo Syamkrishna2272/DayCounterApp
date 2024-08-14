@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_counter/function/date_time_adding.dart';
 import 'package:day_counter/function/date_time_editing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class GoalAdding extends StatefulWidget {
   const GoalAdding({super.key, this.isEditPage, this.goaldata});
@@ -19,7 +20,6 @@ class _GoalAddingState extends State<GoalAdding> {
   void initState() {
     if (widget.isEditPage == true) {
       tittlecontroller.text = widget.goaldata['Tittle'].toString();
-
       Timestamp start = widget.goaldata['StartDate'];
       Timestamp end = widget.goaldata['EndDate'];
       DateTime startDate = start.toDate();
@@ -33,9 +33,12 @@ class _GoalAddingState extends State<GoalAdding> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      insetPadding: EdgeInsets.only(
+          left: MediaQuery.sizeOf(context).width / 17,
+          right: MediaQuery.sizeOf(context).width / 17),
       shape: RoundedRectangleBorder(
         borderRadius:
-            BorderRadius.circular(MediaQuery.sizeOf(context).width / 25),
+            BorderRadius.circular(MediaQuery.sizeOf(context).width / 35),
       ),
       backgroundColor: const Color(0xFF34343E),
       child: Container(
@@ -46,20 +49,24 @@ class _GoalAddingState extends State<GoalAdding> {
           children: [
             Row(
               children: [
-                Expanded(
-                  child: SizedBox(
-                    child: Center(
-                      child: Text(
-                        "Create your Goal",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: MediaQuery.sizeOf(context).width / 20,
-                        ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width / 4.5,
+                ),
+                SizedBox(
+                  child: Center(
+                    child: Text(
+                      "Create your Goal",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: MediaQuery.sizeOf(context).width / 20,
                       ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width / 15,
                 ),
                 InkWell(
                   onTap: () {
@@ -80,12 +87,26 @@ class _GoalAddingState extends State<GoalAdding> {
                 )
               ],
             ),
-            Text(
-              'Create Your Countdown Timer. Start tracking your journey to success today!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: MediaQuery.sizeOf(context).width / 32,
-                color: Colors.white,
+            Align(
+              // alignment: Alignment.center,
+              child: Text(
+                'Create Your Countdown Timer. Start tracking your ',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: MediaQuery.sizeOf(context).width / 28,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Align(
+              // alignment: Alignment.center,
+              child: Text(
+                'journey to success today! ',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: MediaQuery.sizeOf(context).width / 28,
+                  color: Colors.white,
+                ),
               ),
             ),
             SizedBox(height: MediaQuery.sizeOf(context).height / 25),
@@ -101,16 +122,18 @@ class _GoalAddingState extends State<GoalAdding> {
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   hintText: "Enter title (Mandatory)",
-                  hintStyle: const TextStyle(color: Color(0xFFB0B0B0)),
+                  hintStyle: const TextStyle(
+                      color: Color.fromARGB(255, 114, 113, 113)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                        MediaQuery.sizeOf(context).width / 30),
+                        MediaQuery.sizeOf(context).width / 45),
                   ),
                   fillColor: const Color(0xFF121212),
                   filled: true,
                 ),
                 style: TextStyle(
-                    fontSize: MediaQuery.sizeOf(context).height / 60,
+                    fontSize: MediaQuery.sizeOf(context).height / 63,
+                    fontWeight: FontWeight.w400,
                     color: Colors.white),
                 cursorColor: Colors.white,
               ),
@@ -125,48 +148,51 @@ class _GoalAddingState extends State<GoalAdding> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  height: MediaQuery.sizeOf(context).height / 15,
-                  width: MediaQuery.sizeOf(context).width / 3,
+                  height: MediaQuery.sizeOf(context).height / 16,
+                  width: MediaQuery.sizeOf(context).width / 2.5,
                   child: TextField(
                     controller: daycontroller,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: "Days (Mandatory)",
-                      hintStyle: const TextStyle(color: Color(0xFFB0B0B0)),
+                      hintStyle: const TextStyle(
+                          color: Color.fromARGB(255, 114, 113, 113)),
+                      // hintStyle: const TextStyle(color: Color(0xFFEDEDED)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                            MediaQuery.sizeOf(context).width / 30),
+                            MediaQuery.sizeOf(context).width / 45),
                       ),
                       fillColor: const Color(0xFF121212),
                       filled: true,
                     ),
                     style: TextStyle(
-                        fontSize: MediaQuery.sizeOf(context).height / 60,
+                        fontSize: MediaQuery.sizeOf(context).height / 63,
+                        fontWeight: FontWeight.w400,
                         color: Colors.white),
                     cursorColor: Colors.white,
                   ),
                 ),
                 Container(
                   height: MediaQuery.sizeOf(context).height / 16,
-                  width: MediaQuery.sizeOf(context).width / 3,
+                  width: MediaQuery.sizeOf(context).width / 2.6,
                   decoration: BoxDecoration(
                     color: const Color(0xFF121212),
                     borderRadius: BorderRadius.circular(
-                        MediaQuery.sizeOf(context).width / 30),
+                        MediaQuery.sizeOf(context).width / 45),
                   ),
                   child: Center(
                     child: Text(
                       "DAYS",
                       style: TextStyle(
                           fontSize: MediaQuery.sizeOf(context).width / 18,
-                          color: Colors.white,
+                          color: const Color(0xFFB0B0B0),
                           fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.sizeOf(context).height / 30),
             InkWell(
               onTap: () {
                 (widget.isEditPage == true)
@@ -186,7 +212,7 @@ class _GoalAddingState extends State<GoalAdding> {
                 decoration: BoxDecoration(
                   color: const Color(0xFF2C69DE),
                   borderRadius: BorderRadius.circular(
-                      MediaQuery.sizeOf(context).width / 40),
+                      MediaQuery.sizeOf(context).width / 45),
                 ),
                 child: Center(
                   child: Text(

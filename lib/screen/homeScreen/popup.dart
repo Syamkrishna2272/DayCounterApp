@@ -24,5 +24,5 @@ class PopUp1 extends StatelessWidget {
         color: Colors.white,
       ),
     );
-  }
+  } 
 }

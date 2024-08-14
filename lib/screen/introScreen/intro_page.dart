@@ -12,9 +12,9 @@ class IntroPage extends StatelessWidget {
           child: Center(
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.sizeOf(context).height / 12),
+            SizedBox(height: MediaQuery.sizeOf(context).height / 8),
             SizedBox(
-              height: MediaQuery.sizeOf(context).height / 1.9,
+              height: MediaQuery.sizeOf(context).height / 2.2,
               width: MediaQuery.sizeOf(context).height / 3,
               child: Image.asset('asset/img/Group 158.png'),
             ),
@@ -39,7 +39,7 @@ class IntroPage extends StatelessWidget {
                         color: Colors.white),
                   ),
                   SizedBox(height: MediaQuery.sizeOf(context).height / 25),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -48,13 +48,21 @@ class IntroPage extends StatelessWidget {
                         (Route<dynamic> route) => false,
                       );
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF2C69DE),
-                          borderRadius: BorderRadius.circular(
-                              MediaQuery.sizeOf(context).width / 35)),
+                    child: Ink(
                       height: MediaQuery.sizeOf(context).height / 17,
                       width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xFF2C69DE),
+                            Color(0xFF2653AE),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                        ),
+                        borderRadius: BorderRadius.circular(
+                            MediaQuery.sizeOf(context).width / 40),
+                      ),
                       child: Center(
                           child: Text(
                         "Get Start",
@@ -64,6 +72,32 @@ class IntroPage extends StatelessWidget {
                       )),
                     ),
                   )
+
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.pushAndRemoveUntil(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => const GoalCounterScreen()),
+                  //       (Route<dynamic> route) => false,
+                  //     );
+                  //   },
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //         color: const Color(0xFF2C69DE),
+                  //         borderRadius: BorderRadius.circular(
+                  //             MediaQuery.sizeOf(context).width / 35)),
+                  //     height: MediaQuery.sizeOf(context).height / 17,
+                  //     width: MediaQuery.sizeOf(context).width,
+                  //     child: Center(
+                  //         child: Text(
+                  //       "Get Start",
+                  //       style: TextStyle(
+                  //           fontSize: MediaQuery.sizeOf(context).height / 45,
+                  //           color: Colors.white),
+                  //     )),
+                  //   ),
+                  // )
                 ],
               ),
             )
