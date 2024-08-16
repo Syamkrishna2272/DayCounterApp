@@ -45,7 +45,7 @@ class OtpVerificationPage extends StatelessWidget {
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                     suffixText: "Resend OTP",
-                    suffixStyle: const TextStyle(color: Color(0xFF2653AE)),
+                    suffixStyle: const TextStyle(color: Color(0xFF2653AE)), 
                     hintText: 'Enter OTP here',
                     hintStyle: TextStyle(
                         fontSize: MediaQuery.sizeOf(context).width / 28,

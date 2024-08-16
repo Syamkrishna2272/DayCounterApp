@@ -80,12 +80,9 @@ class StreamWidget extends StatelessWidget {
                       itemBuilder: (context, index) {
                         var doc = snapshot.data!.docs[index];
                         var createdAt = doc['StartDate'] as Timestamp;
-                        var formattedDate = DateFormat('MMMM d, yyyy')
-                            .format(createdAt.toDate());
-                        dynamic startdate =
-                            (doc['StartDate'] as Timestamp).toDate();
-                        dynamic enddate =
-                            (doc['EndDate'] as Timestamp).toDate();
+                        var formattedDate = DateFormat('MMMM d, yyyy').format(createdAt.toDate());
+                        dynamic startdate =(doc['StartDate'] as Timestamp).toDate();
+                        dynamic enddate =(doc['EndDate'] as Timestamp).toDate();
                         return Card(
                           child: Container(
                             height: MediaQuery.sizeOf(context).height / 8,
@@ -100,19 +97,24 @@ class StreamWidget extends StatelessWidget {
                                   width: MediaQuery.sizeOf(context).width / 2,
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment:MainAxisAlignment.center,
-                                      crossAxisAlignment:CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text( 
+                                        Text(
                                           doc['Tittle'],
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w600,
                                               fontSize:MediaQuery.sizeOf(context).width /20),
-                                           ),
+                                        ),
                                         Text('Mark on $formattedDate',
-                                            style:  TextStyle(
-                                              fontSize: MediaQuery.sizeOf(context).width/30,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width /
+                                                        30,
                                                 color: Colors.white)),
                                       ],
                                     ),
@@ -142,7 +144,6 @@ class StreamWidget extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return const GoalAdding(); //goal adding
-                        
                       },
                     );
                   },

@@ -1,9 +1,10 @@
 import 'package:day_counter/screen/otpscreen/otp_screen.dart';
-import 'package:day_counter/screen/signupScreen/signup_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
-class UserLoginPage extends StatelessWidget {
-  const UserLoginPage({super.key});
+class UserSignupPage extends StatelessWidget {
+  const UserSignupPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class UserLoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                  child: Text("Login/Register",
+                  child: Text("SignUp",
                       style: TextStyle(
                           fontSize: MediaQuery.sizeOf(context).height / 30,
                           fontWeight: FontWeight.w500,
@@ -79,7 +80,39 @@ class UserLoginPage extends StatelessWidget {
                       color: Colors.white),
                 ),
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height / 25),
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height / 35,
+              ),
+              Text('Password',
+                  style: TextStyle(
+                      fontSize: MediaQuery.sizeOf(context).height / 50,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white)),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width / 1.1,
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(6),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  decoration: InputDecoration(
+                      hintText: 'Enter Passwords',
+                      hintStyle: TextStyle(
+                          fontSize: MediaQuery.sizeOf(context).width / 28,
+                          color: const Color.fromARGB(255, 114, 113, 113)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.sizeOf(context).width / 45))),
+                  style: TextStyle(
+                      fontSize: MediaQuery.sizeOf(context).height / 40,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height / 35,
+              ),
               InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -111,32 +144,6 @@ class UserLoginPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height / 25),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    "Don't have a account?",
-                    style: TextStyle(
-                        fontSize: MediaQuery.sizeOf(context).height / 50,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return UserSignupPage();
-                        }));
-                      },
-                      child: Text(
-                        "SignUp",
-                        style: TextStyle(
-                            fontSize: MediaQuery.sizeOf(context).height / 50,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white),
-                      ))
-                ],
-              )
             ],
           ),
         ),

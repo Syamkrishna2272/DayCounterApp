@@ -19,14 +19,12 @@ class GoalCounterScreen extends StatelessWidget {
           title: const Center(
             child: Text(
               "Goal Counter",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+              style:TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
             ),
           ),
           actions: const [
             PopUp1(),
           ],
-          
         ),
         body: const SafeArea(child: StreamWidget()));
   }
