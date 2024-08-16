@@ -1,4 +1,4 @@
-import 'package:day_counter/screen/homeScreen/goal_screen.dart';
+import 'package:day_counter/screen/loginScreen/login.dart';
 import 'package:flutter/material.dart';
 
 class IntroPage extends StatelessWidget {
@@ -44,7 +44,7 @@ class IntroPage extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const GoalCounterScreen()),
+                            builder: (context) => const UserLoginPage()),
                         (Route<dynamic> route) => false,
                       );
                     },
@@ -72,32 +72,6 @@ class IntroPage extends StatelessWidget {
                       )),
                     ),
                   )
-
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Navigator.pushAndRemoveUntil(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => const GoalCounterScreen()),
-                  //       (Route<dynamic> route) => false,
-                  //     );
-                  //   },
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //         color: const Color(0xFF2C69DE),
-                  //         borderRadius: BorderRadius.circular(
-                  //             MediaQuery.sizeOf(context).width / 35)),
-                  //     height: MediaQuery.sizeOf(context).height / 17,
-                  //     width: MediaQuery.sizeOf(context).width,
-                  //     child: Center(
-                  //         child: Text(
-                  //       "Get Start",
-                  //       style: TextStyle(
-                  //           fontSize: MediaQuery.sizeOf(context).height / 45,
-                  //           color: Colors.white),
-                  //     )),
-                  //   ),
-                  // )
                 ],
               ),
             )

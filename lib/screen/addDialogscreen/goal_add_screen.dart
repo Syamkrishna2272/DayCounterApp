@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:day_counter/function/date_time_adding.dart';
-import 'package:day_counter/function/date_time_editing.dart';
+import 'package:day_counter/screen/addDialogscreen/widget/countdownbutton.dart';
+import 'package:day_counter/screen/addDialogscreen/widget/dayadding_widget.dart';
+import 'package:day_counter/screen/addDialogscreen/widget/titleadding_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class GoalAdding extends StatefulWidget {
   const GoalAdding({super.key, this.isEditPage, this.goaldata});
@@ -88,7 +88,6 @@ class _GoalAddingState extends State<GoalAdding> {
               ],
             ),
             Align(
-              // alignment: Alignment.center,
               child: Text(
                 'Create Your Countdown Timer. Start tracking your ',
                 textAlign: TextAlign.center,
@@ -99,7 +98,6 @@ class _GoalAddingState extends State<GoalAdding> {
               ),
             ),
             Align(
-              // alignment: Alignment.center,
               child: Text(
                 'journey to success today! ',
                 textAlign: TextAlign.center,
@@ -114,114 +112,20 @@ class _GoalAddingState extends State<GoalAdding> {
               "Title*",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              height: MediaQuery.sizeOf(context).height / 15,
-              child: TextField(
-                controller: tittlecontroller,
-                textCapitalization: TextCapitalization.words,
-                decoration: InputDecoration(
-                  hintText: "Enter title (Mandatory)",
-                  hintStyle: const TextStyle(
-                      color: Color.fromARGB(255, 114, 113, 113)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        MediaQuery.sizeOf(context).width / 45),
-                  ),
-                  fillColor: const Color(0xFF121212),
-                  filled: true,
-                ),
-                style: TextStyle(
-                    fontSize: MediaQuery.sizeOf(context).height / 63,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white),
-                cursorColor: Colors.white,
-              ),
-            ),
+            ), 
+            TitleAdding(tittlecontroller: tittlecontroller),    //Title Adding
             SizedBox(height: MediaQuery.sizeOf(context).width / 30),
             const Text(
               "Number of Days*",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height / 16,
-                  width: MediaQuery.sizeOf(context).width / 2.5,
-                  child: TextField(
-                    controller: daycontroller,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "Days (Mandatory)",
-                      hintStyle: const TextStyle(
-                          color: Color.fromARGB(255, 114, 113, 113)),
-                      // hintStyle: const TextStyle(color: Color(0xFFEDEDED)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            MediaQuery.sizeOf(context).width / 45),
-                      ),
-                      fillColor: const Color(0xFF121212),
-                      filled: true,
-                    ),
-                    style: TextStyle(
-                        fontSize: MediaQuery.sizeOf(context).height / 63,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
-                    cursorColor: Colors.white,
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.sizeOf(context).height / 16,
-                  width: MediaQuery.sizeOf(context).width / 2.6,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF121212),
-                    borderRadius: BorderRadius.circular(
-                        MediaQuery.sizeOf(context).width / 45),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "DAYS",
-                      style: TextStyle(
-                          fontSize: MediaQuery.sizeOf(context).width / 18,
-                          color: const Color(0xFFB0B0B0),
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            DayAdding(daycontroller: daycontroller),           //DayAdding
             SizedBox(height: MediaQuery.sizeOf(context).height / 30),
-            InkWell(
-              onTap: () {
-                (widget.isEditPage == true)
-                    ? editcount(
-                        tittlecontroller: tittlecontroller,
-                        daycontroller: daycontroller,
-                        context: context,
-                        doc: widget.goaldata)
-                    : startcount(
-                        tittlecontroller: tittlecontroller,
-                        daycontroller: daycontroller,
-                        context: context);
-              },
-              child: Ink(
-                height: MediaQuery.sizeOf(context).height / 17,
-                width: MediaQuery.sizeOf(context).width,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2C69DE),
-                  borderRadius: BorderRadius.circular(
-                      MediaQuery.sizeOf(context).width / 45),
-                ),
-                child: Center(
-                  child: Text(
-                    (widget.isEditPage == true) ? 'Edit' : 'Start CountDown',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            )
+            CountdownButton(
+                widget: widget,
+                tittlecontroller: tittlecontroller,
+                daycontroller: daycontroller)
           ],
         ),
       ),
