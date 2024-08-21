@@ -33,5 +33,3 @@ startcount(
     Navigator.of(context).pop();
   }
 }
-
-

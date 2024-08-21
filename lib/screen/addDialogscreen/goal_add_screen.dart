@@ -14,7 +14,7 @@ class GoalAdding extends StatefulWidget {
 
 class _GoalAddingState extends State<GoalAdding> {
   TextEditingController tittlecontroller = TextEditingController();
-  TextEditingController daycontroller = TextEditingController();
+  TextEditingController daycontroller    = TextEditingController();
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _GoalAddingState extends State<GoalAdding> {
                 'Create Your Countdown Timer. Start tracking your ',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: MediaQuery.sizeOf(context).width / 28,
+                  fontSize: MediaQuery.sizeOf(context).width / 30,
                   color: Colors.white,
                 ),
               ),
@@ -112,15 +112,15 @@ class _GoalAddingState extends State<GoalAdding> {
               "Title*",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-            ), 
-            TitleAdding(tittlecontroller: tittlecontroller),    //Title Adding
+            ),
+            TitleAdding(tittlecontroller: tittlecontroller), //Title Adding
             SizedBox(height: MediaQuery.sizeOf(context).width / 30),
             const Text(
               "Number of Days*",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
             ),
-            DayAdding(daycontroller: daycontroller),           //DayAdding
+            DayAdding(daycontroller: daycontroller), //DayAdding
             SizedBox(height: MediaQuery.sizeOf(context).height / 30),
             CountdownButton(
                 widget: widget,

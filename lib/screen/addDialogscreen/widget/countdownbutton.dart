@@ -33,7 +33,7 @@ class CountdownButton extends StatelessWidget {
       child: Ink(
         height: MediaQuery.sizeOf(context).height / 17,
         width: MediaQuery.sizeOf(context).width,
-        decoration: BoxDecoration(
+        decoration: BoxDecoration( 
           color: const Color(0xFF2C69DE),
           borderRadius:
               BorderRadius.circular(MediaQuery.sizeOf(context).width / 45),

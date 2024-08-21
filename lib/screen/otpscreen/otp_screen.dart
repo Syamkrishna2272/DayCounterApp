@@ -1,3 +1,4 @@
+import 'package:day_counter/screen/homeScreen/goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -45,7 +46,7 @@ class OtpVerificationPage extends StatelessWidget {
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                     suffixText: "Resend OTP",
-                    suffixStyle: const TextStyle(color: Color(0xFF2653AE)), 
+                    suffixStyle: const TextStyle(color: Color(0xFF2653AE)),
                     hintText: 'Enter OTP here',
                     hintStyle: TextStyle(
                         fontSize: MediaQuery.sizeOf(context).width / 28,
@@ -63,7 +64,14 @@ class OtpVerificationPage extends StatelessWidget {
               height: MediaQuery.sizeOf(context).height / 35,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const GoalCounterScreen()),
+                  (Route<dynamic> route) => false,
+                );
+              },
               child: Ink(
                 height: MediaQuery.sizeOf(context).height / 17,
                 width: MediaQuery.sizeOf(context).width / 1.1,

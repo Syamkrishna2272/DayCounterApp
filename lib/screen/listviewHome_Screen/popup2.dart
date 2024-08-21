@@ -7,7 +7,7 @@ class PopUp2 extends StatelessWidget {
     super.key,
     required this.doc,
   });
-
+ 
   final QueryDocumentSnapshot<Map<String, dynamic>> doc;
 
   @override
@@ -15,8 +15,11 @@ class PopUp2 extends StatelessWidget {
     return PopupMenuButton<String>(
       onSelected: (value) {
         if (value == 'Edit') {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context){
-            return GoalAdding(isEditPage: true,goaldata: doc,); 
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return GoalAdding(
+              isEditPage: true,
+              goaldata: doc,
+            );
           }));
         } else if (value == 'Delete') {
           FirebaseFirestore.instance

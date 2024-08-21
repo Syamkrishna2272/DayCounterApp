@@ -1,5 +1,6 @@
 import 'package:day_counter/screen/homeScreen/popup.dart';
 import 'package:day_counter/screen/listviewHome_Screen/streambuilder.dart';
+import 'package:day_counter/screen/profilescreen/user_profile.dart';
 import 'package:flutter/material.dart';
 
 class GoalCounterScreen extends StatelessWidget {
@@ -12,9 +13,16 @@ class GoalCounterScreen extends StatelessWidget {
         backgroundColor: const Color(0xFF121212),
         appBar: AppBar(
           backgroundColor: const Color(0xFF121212),
-          leading: const Icon(
-            Icons.account_box_rounded,
-            color: Colors.white,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return ProfileScreen();
+              }));
+            },
+            child: const Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
           ),
           title: const Center(
             child: Text(

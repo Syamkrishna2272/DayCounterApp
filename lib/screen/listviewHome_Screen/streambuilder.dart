@@ -107,14 +107,13 @@ class StreamWidget extends StatelessWidget {
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w600,
-                                              fontSize:MediaQuery.sizeOf(context).width /20),
+                                              fontSize:
+                                                  MediaQuery.sizeOf(context).width /20),
                                         ),
                                         Text('Mark on $formattedDate',
                                             style: TextStyle(
                                                 fontSize:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width /
-                                                        30,
+                                                    MediaQuery.sizeOf(context).width /30,
                                                 color: Colors.white)),
                                       ],
                                     ),
@@ -139,6 +138,7 @@ class StreamWidget extends StatelessWidget {
                 padding: EdgeInsets.all(MediaQuery.sizeOf(context).width / 15),
                 child: FloatingActionButton(
                   backgroundColor: const Color(0xFF2C69DE),
+                  
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -147,13 +147,17 @@ class StreamWidget extends StatelessWidget {
                       },
                     );
                   },
+                  
                   shape: const CircleBorder(),
                   child: const Icon(
                     Icons.add,
                     color: Colors.white,
                   ),
+                  
                 ),
+                
               ),
+              
             ],
           );
         }

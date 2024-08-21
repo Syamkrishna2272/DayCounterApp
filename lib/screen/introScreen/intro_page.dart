@@ -1,4 +1,4 @@
-import 'package:day_counter/screen/loginScreen/login.dart';
+import 'package:day_counter/screen/homeScreen/goal_screen.dart';
 import 'package:flutter/material.dart';
 
 class IntroPage extends StatelessWidget {
@@ -45,7 +45,7 @@ class IntroPage extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const UserLoginPage()),
+                            builder: (context) => const GoalCounterScreen()),
                         (Route<dynamic> route) => false,
                       );
                     },
