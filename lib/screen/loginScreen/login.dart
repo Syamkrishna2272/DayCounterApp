@@ -1,6 +1,8 @@
 import 'package:day_counter/screen/homeScreen/goal_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class UserLoginPage extends StatelessWidget {
   const UserLoginPage({super.key});
@@ -38,7 +40,7 @@ class UserLoginPage extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return GoalCounterScreen();
+                    return signinwithGoogle(context);
                   }));
                 },
                 child: Ink(
@@ -83,5 +85,28 @@ class UserLoginPage extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  signinwithGoogle(context) async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return const GoalCounterScreen();
+        }));
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
