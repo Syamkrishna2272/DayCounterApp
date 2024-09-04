@@ -40,7 +40,7 @@ class _GoalAddingState extends State<GoalAdding> {
         borderRadius:
             BorderRadius.circular(MediaQuery.sizeOf(context).width / 35),
       ),
-      backgroundColor: const Color(0xFF34343E),
+      backgroundColor: Color.fromARGB(255, 29, 29, 35),
       child: Container(
         padding: EdgeInsets.all(MediaQuery.sizeOf(context).width / 25),
         child: Column(

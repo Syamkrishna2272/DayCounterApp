@@ -60,7 +60,7 @@ class _GoalCounterScreenState extends State<GoalCounterScreen> {
         child: _screens[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF121212),
+        backgroundColor:  Color(0xFF34343E),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.speed),

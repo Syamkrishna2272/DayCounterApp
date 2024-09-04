@@ -282,7 +282,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const WhatsappIconWidget(),
+                  const WhatsappIconWidget(
+                    phoneNumber: '8891416677',
+                    countryCode: '+91',
+                  ),
                   SizedBox(width: MediaQuery.sizeOf(context).width / 30),
                   const LinkedinIconWidget(),
                   SizedBox(width: MediaQuery.sizeOf(context).width / 30),

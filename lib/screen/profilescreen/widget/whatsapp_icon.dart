@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WhatsappIconWidget extends StatelessWidget {
-  const WhatsappIconWidget({
-    super.key,
-  });
+  final String phoneNumber;
+  final String countryCode;
+  const WhatsappIconWidget(
+      {super.key, required this.phoneNumber, required this.countryCode});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: ()async {
-      //   final Uri url=Uri.parse('https://www.linkedin.com/company/dhoomatech/');
-      //   if(await canLaunchUrl(url)){
-      //     await launchUrl(url);
-      //   }else{
-      //     throw 'could not launch $url';
-      //   }
-      // },
+      onTap: () async {
+        final String fullphonenumber = '$countryCode$phoneNumber';
+        final Uri url = Uri.parse('https://wa.me/+$fullphonenumber');
+        if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        } else {
+          throw 'could not launch $url';
+        }
+      },
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
