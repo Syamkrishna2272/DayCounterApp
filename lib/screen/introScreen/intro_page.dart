@@ -1,5 +1,6 @@
-
+import 'package:day_counter/screen/homeScreen/goal_screen.dart';
 import 'package:day_counter/screen/loginScreen/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class IntroPage extends StatelessWidget {
@@ -7,7 +8,16 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const GoalCounterScreen()),
+        );
+      });
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       body: SafeArea(
@@ -46,7 +56,7 @@ class IntroPage extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>  UserLoginPage()),
+                            builder: (context) => const UserGoogleSigninPage()),
                         (Route<dynamic> route) => false,
                       );
                     },

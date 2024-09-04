@@ -14,7 +14,7 @@ class GoalAdding extends StatefulWidget {
 
 class _GoalAddingState extends State<GoalAdding> {
   TextEditingController tittlecontroller = TextEditingController();
-  TextEditingController daycontroller    = TextEditingController();
+  TextEditingController daycontroller = TextEditingController();
 
   @override
   void initState() {

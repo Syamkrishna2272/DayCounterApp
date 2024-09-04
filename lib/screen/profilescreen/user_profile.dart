@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_counter/screen/profilescreen/widget/facebook_icon.dart';
 import 'package:day_counter/screen/profilescreen/widget/instagram_icon.dart';
 import 'package:day_counter/screen/profilescreen/widget/linkedin_icon.dart';
 import 'package:day_counter/screen/profilescreen/widget/whatsapp_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,8 +18,126 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   File? _selectedimage;
+  String? _imageUrl;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    final User? user = _auth.currentUser;
+    if (user != null) {
+      _emailController.text = user.email ?? '';
+      DocumentSnapshot userData = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      if (userData.exists) {
+        setState(() {
+          _nameController.text = userData['name'] ?? '';
+          _imageUrl = userData['imageUrl'] ?? '';
+        });
+      }
+    }
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final pickedFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        setState(() {
+          _selectedimage = File(pickedFile.path);
+        });
+      } else {
+        print('No image selected.');
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+    }
+  }
+
+  Future<void> _uploadImageAndData() async {
+    if (_selectedimage == null || _nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Please select image and name',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: MediaQuery.sizeOf(context).width / 20,
+                fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(MediaQuery.sizeOf(context).width / 28),
+          ),
+        ),
+      );
+      return;
+    }
+
+    try {
+      // Check if there's an existing image URL
+      if (_imageUrl != null && _imageUrl!.isNotEmpty) {
+        // Delete the old image from Firebase Storage
+        Reference oldImageRef = FirebaseStorage.instance.refFromURL(_imageUrl!);
+        await oldImageRef.delete();
+      }
+
+      // Upload the new image
+      String fileName = '${_auth.currentUser!.uid}.jpg';
+      Reference storageRef =
+          FirebaseStorage.instance.ref().child('profile_images/$fileName');
+      UploadTask uploadTask = storageRef.putFile(_selectedimage!);
+      TaskSnapshot taskSnapshot = await uploadTask;
+      String imageUrl = await taskSnapshot.ref.getDownloadURL();
+
+      // Update Firestore with the new data
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .set({
+        'name': _nameController.text,
+        'imageUrl': imageUrl,
+        'email': _emailController.text,
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Profile updated successfully!',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: MediaQuery.sizeOf(context).width / 20,
+                fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 4),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(MediaQuery.sizeOf(context).width / 28),
+          ),
+        ),
+      );
+    } catch (e) {
+      print('Error uploading data: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to upload data')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +159,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Positioned(
               right: 0,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  _uploadImageAndData();
+                },
                 splashColor: Colors.blue.withOpacity(0.3),
                 highlightColor: Colors.blue.withOpacity(0.3),
                 child: Text(
@@ -65,10 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: MediaQuery.sizeOf(context).height / 30,
               ),
               GestureDetector(
-                onTap: () async {
-                  await addSellerProfileImage();
-                  await addUserProfileToDb();
-                },
+                onTap: _pickImage,
                 child: Container(
                   width: MediaQuery.sizeOf(context).width / 3,
                   height: MediaQuery.sizeOf(context).width / 3,
@@ -79,9 +197,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             image: FileImage(_selectedimage!),
                             fit: BoxFit.cover,
                           )
-                        : const DecorationImage(
-                            image: AssetImage('asset/img/Ellipse 52.png'),
-                          ),
+                        : _imageUrl != null && _imageUrl!.isNotEmpty
+                            ? DecorationImage(
+                                image: NetworkImage(_imageUrl!),
+                                fit: BoxFit.cover,
+                              )
+                            : const DecorationImage(
+                                image: AssetImage('asset/img/Ellipse 52.png'),
+                              ),
                     border: Border.all(
                       color: Colors.white,
                       width: 3.0,
@@ -181,54 +304,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       )),
     );
-  }
-
-  // Future<void> _pickImage() async {
-  //   try {
-  //     final pickedFile =
-  //         await ImagePicker().pickImage(source: ImageSource.gallery);
-  //     if (pickedFile != null) {
-  //       setState(() {
-  //         userprofileimage = pickedFile.path;
-  //       });
-  //     } else {
-  //       print('No image selected.');
-  //     }
-  //   } catch (e) {
-  //     print('Error picking image: $e');
-  //   }
-  // }
-}
-
-String? userprofileimage;
-
-addSellerProfileImage() async {
-  final file = await ImagePicker().pickImage(source: ImageSource.gallery);
-  if (file == null) {
-    return;
-  }
-  userprofileimage = file.path;
-}
-
-Future<String?> addUserProfileToDb() async {
-  if (userprofileimage == null) {
-    return null;
-  }
-
-  String fileName = DateTime.now().microsecondsSinceEpoch.toString();
-  Reference referenceRoot = FirebaseStorage.instance.ref();
-  Reference referenceDireImages = referenceRoot.child('images');
-  Reference referenceImageToUpload = referenceDireImages.child(fileName);
-
-  try {
-    await referenceImageToUpload.putFile(File(userprofileimage!));
-    String imageUrl = await referenceImageToUpload.getDownloadURL();
-    userprofileimage == null;
-    return imageUrl;
-  } catch (e) {
-    if (kDebugMode) {
-      print(e);
-    }
-    return null;
   }
 }

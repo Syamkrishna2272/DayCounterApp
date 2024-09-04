@@ -49,7 +49,7 @@ class DayAdding extends StatelessWidget {
             child: Text(
               "DAYS",
               style: TextStyle(
-                  fontSize: MediaQuery.sizeOf(context).width / 18,
+                  fontSize: MediaQuery.sizeOf(context).width / 18,  
                   color: const Color(0xFFB0B0B0),
                   fontWeight: FontWeight.w600),
             ),

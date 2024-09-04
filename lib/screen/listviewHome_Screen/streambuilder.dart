@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_counter/screen/addDialogscreen/goal_add_screen.dart';
 import 'package:day_counter/screen/listviewHome_Screen/popup2.dart';
 import 'package:day_counter/screen/listviewHome_Screen/Date_time_showing.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class StreamWidget extends StatelessWidget {
@@ -16,6 +16,8 @@ class StreamWidget extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('goalcollection')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .collection('goals')
           .orderBy('StartDate', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
@@ -80,9 +82,12 @@ class StreamWidget extends StatelessWidget {
                       itemBuilder: (context, index) {
                         var doc = snapshot.data!.docs[index];
                         var createdAt = doc['StartDate'] as Timestamp;
-                        var formattedDate = DateFormat('MMMM d, yyyy').format(createdAt.toDate());
-                        dynamic startdate =(doc['StartDate'] as Timestamp).toDate();
-                        dynamic enddate =(doc['EndDate'] as Timestamp).toDate();
+                        var formattedDate = DateFormat('MMMM d, yyyy')
+                            .format(createdAt.toDate());
+                        dynamic startdate =
+                            (doc['StartDate'] as Timestamp).toDate();
+                        dynamic enddate =
+                            (doc['EndDate'] as Timestamp).toDate();
                         return Card(
                           child: Container(
                             height: MediaQuery.sizeOf(context).height / 8,
@@ -108,12 +113,16 @@ class StreamWidget extends StatelessWidget {
                                               color: Colors.white,
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  MediaQuery.sizeOf(context).width /20),
+                                                  MediaQuery.sizeOf(context)
+                                                          .width /
+                                                      20),
                                         ),
                                         Text('Mark on $formattedDate',
                                             style: TextStyle(
                                                 fontSize:
-                                                    MediaQuery.sizeOf(context).width /30,
+                                                    MediaQuery.sizeOf(context)
+                                                            .width /
+                                                        30,
                                                 color: Colors.white)),
                                       ],
                                     ),
@@ -138,7 +147,6 @@ class StreamWidget extends StatelessWidget {
                 padding: EdgeInsets.all(MediaQuery.sizeOf(context).width / 15),
                 child: FloatingActionButton(
                   backgroundColor: const Color(0xFF2C69DE),
-                  
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -147,17 +155,13 @@ class StreamWidget extends StatelessWidget {
                       },
                     );
                   },
-                  
                   shape: const CircleBorder(),
                   child: const Icon(
                     Icons.add,
                     color: Colors.white,
                   ),
-                  
                 ),
-                
               ),
-              
             ],
           );
         }

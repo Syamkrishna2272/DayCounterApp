@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 void editcount({
@@ -18,8 +19,10 @@ void editcount({
     return;
   }
 
-  final CollectionReference firedata =
-      FirebaseFirestore.instance.collection('goalcollection');
+  final CollectionReference firedata = FirebaseFirestore.instance
+      .collection('goalcollection')
+      .doc(FirebaseAuth.instance.currentUser?.uid)
+      .collection('goals');
 
   Map<String, dynamic> data = {
     'Tittle': tittlecontroller.text,

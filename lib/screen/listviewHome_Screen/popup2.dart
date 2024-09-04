@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_counter/screen/addDialogscreen/goal_add_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PopUp2 extends StatelessWidget {
@@ -7,7 +8,7 @@ class PopUp2 extends StatelessWidget {
     super.key,
     required this.doc,
   });
- 
+
   final QueryDocumentSnapshot<Map<String, dynamic>> doc;
 
   @override
@@ -24,6 +25,8 @@ class PopUp2 extends StatelessWidget {
         } else if (value == 'Delete') {
           FirebaseFirestore.instance
               .collection('goalcollection')
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .collection('goals')
               .doc(doc.id)
               .delete();
         }
