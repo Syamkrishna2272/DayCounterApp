@@ -22,11 +22,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FocusNode _namefocus = FocusNode();
+  bool _isEditing = false;
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
+    _namefocus.addListener(() {
+      setState(() {
+        _isEditing = _namefocus.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _namefocus.dispose();
+    super.dispose();
   }
 
   Future<void> _fetchUserData() async {
@@ -64,11 +77,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _uploadImageAndData() async {
-    if (_selectedimage == null || _nameController.text.isEmpty) {
+    // Check if only the name is missing
+    if (_nameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Please select image and name',
+            'Please enter your name',
             style: TextStyle(
                 color: Colors.white,
                 fontSize: MediaQuery.sizeOf(context).width / 20,
@@ -83,24 +97,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       );
-      return;
     }
 
+    // Proceed to upload the image if selected, but don't block the name update
     try {
-      // Check if there's an existing image URL
-      if (_imageUrl != null && _imageUrl!.isNotEmpty) {
-        // Delete the old image from Firebase Storage
-        Reference oldImageRef = FirebaseStorage.instance.refFromURL(_imageUrl!);
-        await oldImageRef.delete();
-      }
+      // If an image is selected, upload it
+      String? imageUrl;
+      if (_selectedimage != null) {
+        // Check if there's an existing image URL and delete the old image
+        if (_imageUrl != null && _imageUrl!.isNotEmpty) {
+          Reference oldImageRef =
+              FirebaseStorage.instance.refFromURL(_imageUrl!);
+          await oldImageRef.delete();
+        }
 
-      // Upload the new image
-      String fileName = '${_auth.currentUser!.uid}.jpg';
-      Reference storageRef =
-          FirebaseStorage.instance.ref().child('profile_images/$fileName');
-      UploadTask uploadTask = storageRef.putFile(_selectedimage!);
-      TaskSnapshot taskSnapshot = await uploadTask;
-      String imageUrl = await taskSnapshot.ref.getDownloadURL();
+        // Upload the new image
+        String fileName = '${_auth.currentUser!.uid}.jpg';
+        Reference storageRef =
+            FirebaseStorage.instance.ref().child('profile_images/$fileName');
+        UploadTask uploadTask = storageRef.putFile(_selectedimage!);
+        TaskSnapshot taskSnapshot = await uploadTask;
+        imageUrl = await taskSnapshot.ref.getDownloadURL();
+      }
 
       // Update Firestore with the new data
       await FirebaseFirestore.instance
@@ -108,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .doc(_auth.currentUser!.uid)
           .set({
         'name': _nameController.text,
-        'imageUrl': imageUrl,
+        'imageUrl': imageUrl ?? _imageUrl,
         'email': _emailController.text,
       });
 
@@ -130,6 +148,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       );
+      setState(() {
+        _isEditing = false;
+        _namefocus.unfocus();
+      });
     } catch (e) {
       print('Error uploading data: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -158,18 +180,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Positioned(
               right: 0,
-              child: InkWell(
-                onTap: () {
-                  _uploadImageAndData();
-                },
-                splashColor: Colors.blue.withOpacity(0.3),
-                highlightColor: Colors.blue.withOpacity(0.3),
-                child: Text(
-                  "Update",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500,
-                    fontSize: MediaQuery.sizeOf(context).width / 25,
+              child: Visibility(
+                visible: _isEditing,
+                child: InkWell(
+                  onTap: () {
+                    _uploadImageAndData();
+                  },
+                  splashColor: Colors.blue.withOpacity(0.3),
+                  highlightColor: Colors.blue.withOpacity(0.3),
+                  child: Text(
+                    "Update",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w500,
+                      fontSize: MediaQuery.sizeOf(context).width / 25,
+                    ),
                   ),
                 ),
               ),
@@ -221,6 +246,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     right: MediaQuery.sizeOf(context).width / 8.5),
                 child: TextField(
                   controller: _nameController,
+                  focusNode: _namefocus,
                   textCapitalization: TextCapitalization.words,
                   decoration: const InputDecoration(
                     hintText: "your name here",
@@ -243,6 +269,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     right: MediaQuery.sizeOf(context).width / 8.5),
                 child: TextField(
                   controller: _emailController,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     hintText: "email address here",
                     hintStyle:
