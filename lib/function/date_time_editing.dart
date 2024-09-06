@@ -49,7 +49,7 @@ void editcount({
             style: TextStyle(
               fontSize: MediaQuery.sizeOf(context).width / 30,
               color: Colors.white,
-            ),
+            ), 
           ), 
           duration: const Duration(seconds: 2),
           backgroundColor:
