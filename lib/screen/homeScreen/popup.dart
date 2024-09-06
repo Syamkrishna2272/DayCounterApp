@@ -1,8 +1,8 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:day_counter/screen/introScreen/intro_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PopUp1 extends StatelessWidget {
   const PopUp1({
@@ -15,10 +15,10 @@ class PopUp1 extends StatelessWidget {
       onSelected: (value) {
         switch (value) {
           case 1:
-            // Handle Send Feedback
+            sendEmail();
             break;
           case 2:
-            userLogout(context); // Call the logout function
+            userLogout(context); 
             break;
         }
       },
@@ -70,5 +70,17 @@ class PopUp1 extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> sendEmail() async {
+    final Uri emaillaunchUri = Uri(
+        scheme: 'mailto',
+        path: '	info@dhoomatech.com',
+        queryParameters: {'subject': 'Feedback'});
+    try {
+      await launchUrl(emaillaunchUri);
+    } catch (e) {
+      print("Could not launch email app: $e");
+    }
   }
 }
