@@ -1,5 +1,5 @@
 import 'package:day_counter/screen/homeScreen/goal_screen.dart';
-import 'package:day_counter/screen/loginScreen/login.dart';
+import 'package:day_counter/screen/service/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -53,12 +53,13 @@ class IntroPage extends StatelessWidget {
                   SizedBox(height: MediaQuery.sizeOf(context).height / 25),
                   InkWell(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const UserGoogleSigninPage()),
-                        (Route<dynamic> route) => false,
-                      );
+                      signinwithGoogle(context);
+                      // Navigator.pushAndRemoveUntil(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => const UserGoogleSigninPage()),
+                      //   (Route<dynamic> route) => false,
+                      // );
                     },
                     child: Ink(
                       height: MediaQuery.sizeOf(context).height / 17,
