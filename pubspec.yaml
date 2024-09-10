@@ -39,6 +39,7 @@ dependencies:
   google_sign_in: ^6.2.1
   image_picker: ^1.1.2
   intl: ^0.19.0
+  lottie: ^3.1.2
   url_launcher: ^6.3.0
 
 dev_dependencies:
@@ -66,6 +67,7 @@ flutter:
   assets:
     - asset/img/Group 158.png
     - asset/img/Ellipse 52.png
+    - asset/animation/Animation - 1725968504012 (1).json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

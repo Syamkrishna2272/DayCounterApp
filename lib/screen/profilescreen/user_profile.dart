@@ -224,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           )
                         : _imageUrl != null && _imageUrl!.isNotEmpty
                             ? DecorationImage(
-                                image: NetworkImage(_imageUrl!),
+                                image: NetworkImage(_imageUrl!), 
                                 fit: BoxFit.cover,
                               )
                             : const DecorationImage(
